@@ -18,23 +18,23 @@ namespace Wpf_Lab17_color
     /// <summary>
     /// Логика взаимодействия для ColorPicker.xaml
     /// </summary>
-    public partial class ColorPicker : System.Windows.Controls.UserControl//создаем класс и наследуем от системного класса UserControl
+    public partial class ColorPicker : System.Windows.Controls.UserControl
     {
         public ColorPicker()
         {
             InitializeComponent();
         }
-        //задаем свойства зависимости
+        
         public static DependencyProperty ColorProperty;
         public static DependencyProperty RedProperty;
         public static DependencyProperty GreenProperty;
         public static DependencyProperty BlueProperty;
-        //сохдаем свойство маршрутизированного события
+        
         public static readonly RoutedEvent ColorChangedEvent;
 
         static ColorPicker()
         {
-            // Регистрация свойств зависимости
+            
             ColorProperty = DependencyProperty.Register("Color", typeof(Color), typeof(ColorPicker),
                 new FrameworkPropertyMetadata(Colors.Black, new PropertyChangedCallback(OnColorChanged)));
             RedProperty = DependencyProperty.Register("Red", typeof(byte), typeof(ColorPicker),
@@ -44,12 +44,12 @@ namespace Wpf_Lab17_color
             BlueProperty = DependencyProperty.Register("Blue", typeof(byte), typeof(ColorPicker),
                  new FrameworkPropertyMetadata(new PropertyChangedCallback(OnColorRGBChanged)));
 
-            // Регистрация маршрутизируемого события
+            
             ColorChangedEvent = EventManager.RegisterRoutedEvent("ColorChanged", RoutingStrategy.Bubble,
                 typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPicker));
         }
 
-        //задаем стандартные свойства
+        
         public Color Color
         {
             get { return (Color)GetValue(ColorProperty); }
@@ -70,14 +70,14 @@ namespace Wpf_Lab17_color
             get { return (byte)GetValue(BlueProperty); }
             set { SetValue(BlueProperty, value); }
         }
-        //создаем делегат события
+        
         public event RoutedPropertyChangedEventHandler<Color> ColorChanged
         {
             add { AddHandler(ColorChangedEvent, value); }
             remove { RemoveHandler(ColorChangedEvent, value); }
         }
 
-        //создаем метод для изменения цвета через RGB
+        
         private static void OnColorRGBChanged(DependencyObject sender,
             DependencyPropertyChangedEventArgs e)
         {
@@ -92,7 +92,7 @@ namespace Wpf_Lab17_color
 
             colorPicker.Color = color;
         }
-        //создаем метод для изменения цвета через Color
+        
         private static void OnColorChanged(DependencyObject sender,
       DependencyPropertyChangedEventArgs e)
         {
